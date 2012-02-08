@@ -6,8 +6,7 @@ type Square = [[Maybe Int]]
 main = print $ solve [
     [Just 0,  Nothing, Nothing],
     [Nothing, Nothing, Just 1 ],
-    [Just 1,  Nothing, Nothing]
-]
+    [Just 1,  Nothing, Nothing]]
 
 solve :: Square -> Maybe Square
 solve sq = if isComplete sq then Just sq
@@ -27,11 +26,11 @@ empties sq = do
     (val, x) <- zip row [0..]
     case val of
         Nothing -> return (x, y)
-        Just _ -> []
+        Just _  -> []
 
 isMoveValid :: Square -> (Int,Int) -> Int -> Bool
 isMoveValid sq (x,y) value = all valid (sq !! y) &&
-                         all valid (map (!! x) sq)
+                             all valid (map (!! x) sq)
     where valid = (/= Just value)
 
 play :: Int -> (Int,Int) -> Square -> Square
