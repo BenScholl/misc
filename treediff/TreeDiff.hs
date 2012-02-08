@@ -17,8 +17,8 @@ data Tree a = Tree a [Tree a]
 data EditAction = Same Int Int | Update Int Int | Delete Int | Insert Int
         deriving (Show, Eq)
 
--- Represents the cost of a route of the edit graph, along with the actions taken on that route
--- 'Infinity' represents paths that can't be taken, as in the original paper
+-- Represents the cost of a route of the edit graph, along with the actions taken on that route.
+-- 'Infinity' represents paths that can't be taken, as in the original paper.
 data Cost = Cost Int [EditAction] | Infinity
         deriving (Show, Eq)
 
@@ -36,9 +36,6 @@ instance Monoid Cost where
 
 data DepthInfo a = DepthInfo { nodeValue :: a, depth :: Int }
 
-buildDepthInfo :: Int -> Tree a -> [DepthInfo a]
-buildDepthInfo n (Tree value branches) = DepthInfo value n : concatMap (buildDepthInfo (n+1)) branches
-
 treeDiff :: Eq a => Tree a -> Tree a -> Cost
 treeDiff treeA treeB = editGraphDistance (itemsA, itemCountA) (itemsB, itemCountB) itemCountA itemCountB
     where
@@ -46,6 +43,9 @@ treeDiff treeA treeB = editGraphDistance (itemsA, itemCountA) (itemsB, itemCount
         itemsB = reverse $ buildDepthInfo 0 treeB
         itemCountA = length itemsA
         itemCountB = length itemsB
+
+buildDepthInfo :: Int -> Tree a -> [DepthInfo a]
+buildDepthInfo n (Tree value branches) = DepthInfo value n : concatMap (buildDepthInfo (n+1)) branches
 
 -- The DepthInfo lists passed in need to be in reverse order.
 -- This is because we begin at the furthest point of the edit graph, and work back to the start.
