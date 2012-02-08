@@ -1,1 +1,1 @@
-Does this work?
+Calculates the shortest edit distance between two ordered trees. A purely functional version of the algorithm described by Sudarshan S. Chawathe ("Comparing Hierarchical Data in External Memory", 1999).
